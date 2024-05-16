@@ -1,0 +1,9 @@
+**/.vs
+**/bin
+**/obj
+**/*.user
+**/*.log
+**/Logs/*
+
+**/*.env
+*.bak

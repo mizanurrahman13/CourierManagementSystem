@@ -1,0 +1,5 @@
+Add: dotnet ef migrations add Initial_Create -c ApplicationDbContext -p .\src\libraries\CourierManagementSystem.Infrastructure -s .\src\applications\CourierManagementSystem.Web -o Migrations
+
+Update: dotnet ef database update -c ApplicationDbContext -p .\src\libraries\CourierManagementSystem.Infrastructure -s .\src\applications\CourierManagementSystem.Web
+
+Remove: dotnet ef migrations remove -c ApplicationDbContext  -p .\src\libraries\CourierManagementSystem.Infrastructure  -s .\src\applications\CourierManagementSystem.Web --force

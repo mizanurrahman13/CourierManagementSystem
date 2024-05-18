@@ -1,0 +1,85 @@
+﻿@model CourierManagementSystem.Web.Areas.Operator.Models.BookParcelCreateModel
+
+@{
+    ViewData["Title"] = "Create BookParcel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create BookParcel</h1>
+
+<form role="form" asp-controller="BookParcel" asp-action="Create" method="post" asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+    
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="BookParcelFromName">From Name</label>
+                            <input type="text" class="form-control" asp-for="BookParcelFromName" id="BookParcelFromName">
+                            <span asp-validation-for="BookParcelFromName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BookParcelFromPhoneNumber">From Phone Number</label>
+                            <input type="text" class="form-control" asp-for="BookParcelFromPhoneNumber" id="BookParcelFromPhoneNumber">
+                            <span asp-validation-for="BookParcelFromPhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BookParcelFromAddress">From Address</label>
+                            <textarea asp-for="BookParcelFromAddress" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="BookParcelFromAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="BookParcelToName">To Name</label>
+                            <input type="text" class="form-control" asp-for="BookParcelToName" id="BookParcelToName">
+                            <span asp-validation-for="BookParcelToName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BookParcelToPhoneNumber">To Phone Number</label>
+                            <input type="text" class="form-control" asp-for="BookParcelToPhoneNumber" id="BookParcelToPhoneNumber">
+                            <span asp-validation-for="BookParcelToPhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BookParcelToAddress">To Address</label>
+                            <textarea asp-for="BookParcelToAddress" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="BookParcelToAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!--/.row -->
+        <div class="form-group" style="padding:20px">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+
+</form>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

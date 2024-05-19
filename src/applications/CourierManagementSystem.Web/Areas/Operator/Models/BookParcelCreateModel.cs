@@ -2,7 +2,6 @@
 using BookParcelBO = CourierManagementSystem.Infrastructure.BusinessObjects.BookParcel;
 using Autofac;
 using AutoMapper;
-using static System.Formats.Asn1.AsnWriter;
 using CourierManagementSystem.Infrastructure.Services;
 using Org.BouncyCastle.Security;
 using CourierManagementSystem.Infrastructure.Enums;
@@ -11,8 +10,6 @@ namespace CourierManagementSystem.Web.Areas.Operator.Models;
 
 public class BookParcelCreateModel
 {
-    public Guid Id { get; set; }
-
     public string BookParcelFromName { get; set; } = string.Empty;
     public string BookParcelFromPhoneNumber { get; set; } = string.Empty;
     public string BookParcelFromAddress { get; set; } = string.Empty;
@@ -26,7 +23,7 @@ public class BookParcelCreateModel
     public string? CreatedBy { get; set; }
     public string? UpdatedBy { get; set; }
     public bool IsActive { get; set; }
-    public Status Status { get; set; }
+    public Status? Status { get; set; }
     public string? TracId { get; set; }
 
     public IList<ItemBO>? Items { get; set; }

@@ -7,10 +7,7 @@
 
 <h1>Create BookParcel</h1>
 
-<form role="form" asp-controller="BookParcel" asp-action="Create" method="post" asp-antiforgery="true">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    
-    
+<form asp-controller="BookParcel" asp-area="Operator" asp-action="Create" method="post">      
 
     <div class="container-fluid">
         <div class="row">
@@ -23,17 +20,17 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="BookParcelFromName">From Name</label>
-                            <input type="text" class="form-control" asp-for="BookParcelFromName" id="BookParcelFromName">
+                            <input type="text" class="form-control" asp-for="BookParcelFromName" id="BookParcelFromName" name="BookParcelFromName">
                             <span asp-validation-for="BookParcelFromName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="BookParcelFromPhoneNumber">From Phone Number</label>
-                            <input type="text" class="form-control" asp-for="BookParcelFromPhoneNumber" id="BookParcelFromPhoneNumber">
+                            <input type="text" class="form-control" id="BookParcelFromPhoneNumber" asp-for="BookParcelFromPhoneNumber" name="BookParcelFromPhoneNumber">
                             <span asp-validation-for="BookParcelFromPhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="BookParcelFromAddress">From Address</label>
-                            <textarea asp-for="BookParcelFromAddress" class="form-control" rows="3"></textarea>
+                            <textarea id="BookParcelFromAddress" asp-for="BookParcelFromAddress" name="BookParcelFromAddress" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="BookParcelFromAddress" class="text-danger"></span>
                         </div>
                     </div>
@@ -49,17 +46,17 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="BookParcelToName">To Name</label>
-                            <input type="text" class="form-control" asp-for="BookParcelToName" id="BookParcelToName">
+                            <input type="text" class="form-control" asp-for="BookParcelToName" id="BookParcelToName" name="BookParcelToName">
                             <span asp-validation-for="BookParcelToName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="BookParcelToPhoneNumber">To Phone Number</label>
-                            <input type="text" class="form-control" asp-for="BookParcelToPhoneNumber" id="BookParcelToPhoneNumber">
+                            <input type="text" class="form-control" asp-for="BookParcelToPhoneNumber" id="BookParcelToPhoneNumber" name="BookParcelToPhoneNumber">
                             <span asp-validation-for="BookParcelToPhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="BookParcelToAddress">To Address</label>
-                            <textarea asp-for="BookParcelToAddress" class="form-control" rows="3"></textarea>
+                            <textarea id="BookParcelToAddress" asp-for="BookParcelToAddress" name="BookParcelToAddress" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="BookParcelToAddress" class="text-danger"></span>
                         </div>
                     </div>
@@ -67,19 +64,194 @@
             </div>
             <!--/.col (right) -->
         </div>
+        @Html.HiddenFor(m => m.Items)
         <!--/.row -->
         <div class="form-group" style="padding:20px">
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" asp-controller="BookParcel" asp-area="Operator" class="btn btn-default">Cancel</a>
+            <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
         </div>
     </div>
-
+    @Html.AntiForgeryToken()
 </form>
 
+<h1>Add Bookint Items</h1>
 
+<form role="form" asp-controller="BookParcel" asp-area="Operator" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <div class="container-fluid">
+        <!-- Other form fields for BookParcel... -->
+        <!-- Item input fields -->
+        <div class="row">
+            <div class="col-4">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="Name">Item Name</label>
+                            <input type="text" class="form-control" id="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="Quantity">Quantity</label>
+                            <input type="number" class="form-control" id="Quantity">
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <textarea class="form-control" id="Description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="PaymentType">Payment Type</label>
+                            <input type="text" class="form-control" id="PaymentType">
+                        </div>
+                        <div class="form-group">
+                            <label for="Total">Total</label>
+                            <input type="number" step="0.01" class="form-control" id="Total">
+                        </div>
+                        <button type="button" id="addItemButton" class="btn btn-primary">Add Item</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8">
+                <table class="table" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>Payment Type</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Items table -->
+        @* <div class="row">
+            <div class="col-12">
+                <table class="table" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>Payment Type</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div> *@
+
+        
+    </div>
+</form>
+
+@section Scripts
+{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <!-- toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const items = [];
+
+            document.getElementById('addItemButton').addEventListener('click', function () {
+                const bookParcelFromName = document.getElementById('BookParcelFromName').value;
+                const bookParcelFromPhoneNumber = document.getElementById('BookParcelFromPhoneNumber').value;
+                const bookParcelFromAddress = document.getElementById('BookParcelFromAddress').value;
+                const bookParcelToName = document.getElementById('BookParcelToName').value;
+                const bookParcelToPhoneNumber = document.getElementById('BookParcelToPhoneNumber').value;
+                const bookParcelToAddress = document.getElementById('BookParcelToAddress').value;
+
+                const itemName = document.getElementById('Name').value;
+                const itemQuantity = document.getElementById('Quantity').value;
+                const itemDescription = document.getElementById('Description').value;
+                const itemPaymentType = document.getElementById('PaymentType').value;
+                const itemTotal = document.getElementById('Total').value;
+
+                const item = {
+                    id: generateGuid(),
+                    name: itemName,
+                    quantity: parseFloat(itemQuantity),
+                    description: itemDescription,
+                    paymentType: itemPaymentType,
+                    total: parseFloat(itemTotal),
+                    createdDate: new Date(),
+                    updatedDate: new Date()
+                };
+
+                items.push(item);
+
+                $("#Items").val("");
+                $("#Items").val(items);
+
+                addItemToTable(item);
+
+                const bookParcel = {
+                    id: generateGuid(),
+                    bookParcelFromName: bookParcelFromName,
+                    bookParcelFromPhoneNumber: bookParcelFromPhoneNumber,
+                    bookParcelFromAddress: bookParcelFromAddress,
+                    bookParcelToName: bookParcelToName,
+                    bookParcelToPhoneNumber: bookParcelToPhoneNumber,
+                    bookParcelToAddress: bookParcelToAddress,
+                    // createdDate: new Date(),
+                    // updatedDate: new Date(),
+                    // createdBy: createdBy,
+                    // updatedBy: updatedBy,
+                    // isActive: fasle,
+                    // status: 'Delivery Process',
+                    // tracId: '',
+                    Items: items
+                };
+                console.log('book parcel', bookParcel);
+            });            
+
+            function addItemToTable(item) {
+                const tableBody = document.getElementById('itemsTable').querySelector('tbody');
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                            <td>${item.name}</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.description}</td>
+                            <td>${item.paymentType}</td>
+                            <td>${item.total}</td>
+                            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem('${item.id}')">Remove</button></td>
+                        `;
+
+                tableBody.appendChild(row);
+            }
+
+            window.removeItem = function (itemId) {
+                const tableBody = document.getElementById('itemsTable').querySelector('tbody');
+                items = items.filter(item => item.id !== itemId);
+                const row = tableBody.querySelector(`tr[data-id="${itemId}"]`);
+                if (row) {
+                    tableBody.removeChild(row);
+                }
+            };
+
+            function generateGuid() {
+                // Generate a GUID for the item
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+        });
+    </script>
+    <script>
+        var msg = '@TempData["message"]';
+        if (msg.length) {
+            toastr.error(msg);
+        }
+    </script>
 }
-

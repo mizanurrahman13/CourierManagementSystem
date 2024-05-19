@@ -29,15 +29,15 @@ public class BookParcelService : IBookParcelService
 
         if (count == 0)
         {
-            var productEntity = _mapper.Map<BookParcelEntity>(bookParcel);
+            var bookParcelEntity = _mapper.Map<BookParcelEntity>(bookParcel);
 
             var id = IdentityGenerator.NewSequentialGuid();
-            productEntity.Id = id;
+            bookParcelEntity.Id = id;
 
-            productEntity.CreatedBy = await _currentUserService.GetUsername();
-            productEntity.UpdatedBy = await _currentUserService.GetUsername();
+            bookParcelEntity.CreatedBy = await _currentUserService.GetUsername();
+            bookParcelEntity.UpdatedBy = await _currentUserService.GetUsername();
 
-            await _courierManagementSystemUnitOfWork.BookParcels.AddAsync(productEntity);
+            await _courierManagementSystemUnitOfWork.BookParcels.AddAsync(bookParcelEntity);
             await _courierManagementSystemUnitOfWork.SaveAsync();
         }
         else

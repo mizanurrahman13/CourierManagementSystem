@@ -20,8 +20,8 @@ public class BookParcel
     public DateTimeOffset? UpdatedDate { get; set; }
     public string? CreatedBy { get; set; }
     public string? UpdatedBy { get; set; }
-    public bool IsActive { get; set; }
-    public Status Status { get; set; }
+    public bool? IsActive { get; set; }
+    public Status? Status { get; set; }
     public string? TracId { get; set; }
 
     public IList<Item> Items { get; set; }
